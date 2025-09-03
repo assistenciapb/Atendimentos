@@ -1,82 +1,65 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Registro de Atendimentos</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Atendimentos</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
 </head>
 <body>
 
-  <!-- Header -->
-  <header>
-    <button onclick="location.reload()">📋 Atendimentos</button>
-  </header>
+<header>
+    <h1>Registro de Atendimentos</h1>
+</header>
 
-  <!-- Seção principal -->
-  <section>
-    <h2>Registrar Atendimento</h2>
+<main>
+    <!-- Formulário de atendimento -->
+    <section id="formSection">
+        <form id="atendimentoForm">
+            <input type="text" id="nome" placeholder="Nome" required>
+            <input type="text" id="cpf" placeholder="CPF">
+            <input type="text" id="nis" placeholder="NIS">
+            <input type="text" id="motivo" placeholder="Motivo do Atendimento" required>
+            <button type="submit">Registrar Atendimento</button>
+        </form>
+    </section>
 
-    <!-- Formulário -->
-    <form id="atendimentoForm">
-      <input type="text" id="nome" placeholder="Nome do atendido" required>
-      <input type="text" id="cpf" placeholder="CPF do atendido" required>
-      <input type="text" id="nis" placeholder="NIS (opcional)">
-      <input type="text" id="motivo" placeholder="Motivo do atendimento" required>
-      <button type="submit">Registrar</button>
-    </form>
+    <!-- Filtros de data -->
+    <section id="filtrosSection">
+        <div class="busca-filtros">
+            <button class="filtro-btn active" data-filtro="dia">Hoje</button>
+            <button class="filtro-btn" data-filtro="semana">Semana</button>
+            <button class="filtro-btn" data-filtro="mes">Mês</button>
+            <input type="month" id="mesSelecionado" style="display:none;">
+            <button id="btnImprimirMes" style="display:none;">Imprimir Mês</button>
+        </div>
+    </section>
 
-    <h2>Lista de Atendimentos</h2>
+    <!-- Tabela de atendimentos -->
+    <section id="tabelaSection">
+        <table id="tabelaAtendimentos">
+            <thead>
+                <tr>
+                    <th>Status</th>
+                    <th>Nome</th>
+                    <th>CPF</th>
+                    <th>NIS</th>
+                    <th>Motivo</th>
+                    <th>Data</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Linhas preenchidas via JS -->
+            </tbody>
+        </table>
+    </section>
+</main>
 
-    <!-- Filtros -->
-    <div class="filtros-container">
-      <button class="filtro-btn" data-filtro="dia">Hoje</button>
-      <button class="filtro-btn" data-filtro="semana">Semana</button>
-      <button class="filtro-btn" data-filtro="mes">Mês</button>
-      <input type="month" id="mesSelecionado" style="display:none;">
-      <button id="btnImprimirMes" style="display:none;">Imprimir Mês</button>
-    </div>
-
-    <!-- Tabela -->
-    <div class="tabela-container">
-      <table id="tabelaAtendimentos">
-        <thead>
-          <tr>
-            <th>Nome</th>
-            <th>CPF</th>
-            <th>NIS</th>
-            <th>Motivo</th>
-            <th>Data</th>
-            <th>Ações</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- Preenchido dinamicamente -->
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <!-- Modal edição -->
-  <div id="modal" class="modal">
-    <div class="modal-content">
-      <span id="closeModal" class="close">&times;</span>
-      <h3>Editar Atendimento</h3>
-      <form id="editForm">
-        <input type="text" id="editNome" placeholder="Nome do atendido" required>
-        <input type="text" id="editCpf" placeholder="CPF do atendido" required>
-        <input type="text" id="editNis" placeholder="NIS (opcional)">
-        <input type="text" id="editMotivo" placeholder="Motivo do atendimento" required>
-        <button type="submit">Salvar Alterações</button>
-      </form>
-    </div>
-  </div>
-
-  <!-- jsPDF e autoTable -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
-
-  <!-- Script principal -->
-  <script type="module" src="script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
